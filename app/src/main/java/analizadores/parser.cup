@@ -1,0 +1,132 @@
+
+// - - - SECCIÓN CÓDIGO - - - 
+
+import java_cup.runtime.*;
+
+parser code {:
+    int aaa;
+:}
+
+
+// - - - SECCIÓN DE TERMINALES - - - 
+
+terminal DEF, BARRAS, PIE, EJECUTAR, TITULO, EJEX, EJEY, UNIR, TIPO;
+terminal CANTIDAD, PORCENTAJE, ETIQUETAS, VALORES, TOTAL, EXTRA;    
+terminal ENTERO, LITERAL, DECIMAL, COMA, PUNTO_COMA, DOS_PUNTOS;    
+terminal LLAVE_INI, LLAVE_FIN, PARENTESIS_INI, PARENTESIS_FIN;      
+terminal CORCHETE_INI, CORCHETE_FIN, MAS, MENOS, POR, ENTRE;       
+
+
+// - - - SECCIÓN DE NO TERMINALES - - - 
+
+non terminal s, g, b, p, t, x, y, u, ti, cp, et, v, tt, ex; 
+non terminal ab, ap, i, ip, q, qp, k, kp, o, op, n, e;
+
+
+// - - - GRAMÁTICA TIPO 2 - - - 
+
+start with s;  //opcional
+
+s ::= DEF g 
+  |   e    
+;
+
+g ::= b s
+  |   p s
+  |   /* LAMBDA */
+;
+
+b ::= BARRAS LLAVE_INI ab LLAVE_FIN               {:/*Crear objeto y añadirlo a arraylist*/Barras barras = new Barras(); listaGraficas.add(barras); ultimaGrafica++;:}
+;
+
+p ::= PIE LLAVE_INI ap LLAVE_FIN                  {:/*Crear objeto y añadirlo a arraylist*/Pie pie = new Pie(); listaGraficas.add(pie):}
+;
+
+t ::= TITULO DOS_PUNTOS LITERAL PUNTO_COMA        {:/* listaGraficas.get(ultimaGrafica).setTitulo(LITERAL  ); */:}
+;
+
+x ::= EJEX DOS_PUNTOS CORCHETE_INI i CORCHETE_FIN PUNTO_COMA    {:/* CREAR CHIQUI ARRAY O UN STRING */:}
+;
+
+y ::= EJEY DOS_PUNTOS CORCHETE_INI k CORCHETE_FIN PUNTO_COMA    {}
+;
+
+u ::= UNIR DOS_PUNTOS CORCHETE_INI q CORCHETE_FIN PUNTO_COMA    {:/* STRING TUPLAS Y MATRIZ */:}
+;
+
+ti ::= TIPO DOS_PUNTOS cp PUNTO_COMA                 {:/**SET TIPO */:} 
+;
+
+cp ::= CANTIDAD
+   |   PORCENTAJE
+;
+
+et ::= ETIQUETAS DOS_PUNTOS CORCHETE_INI i CORCHETE_FIN PUNTO_COMA
+;
+
+v ::= VALORES DOS_PUNTOS CORCHETE_INI k CORCHETE_FIN PUNTO_COMA
+;
+
+tt ::= TOTAL DOS_PUNTOS n PUNTO_COMA
+;
+
+ex ::= EXTRA DOS_PUNTOS LITERAL PUNTO_COMA            
+;
+
+ab ::= t ab
+   |   x ab
+   |   y ab
+   |   u ab
+   |   /* LAMBDA */
+;
+
+ap ::= t ap
+   |   ti ap
+   |   et ap
+   |   v ap
+   |   tt ap
+   |   u ap
+   |   ex ap
+   |   /* LAMBDA */
+;
+
+i ::= LITERAL ip
+;
+
+ip ::= PUNTO_COMA LITERAL ip
+   |   /* LAMBDA */
+;
+
+q ::= LLAVE_INI k LLAVE_FIN qp
+;
+
+qp ::= PUNTO_COMA LLAVE_INI k  LLAVE_FIN qp
+   |   /* LAMBDA */
+;
+
+k ::= o kp
+;
+
+kp ::= COMA kp
+   |   /* LAMBDA */
+;
+
+o ::= n op
+;
+
+op ::= MAS n op
+   |   MENOS n op
+   |   POR n op
+   |   ENTRE n op
+   |   /* LAMBDA */
+;
+
+n ::= ENTERO
+  |   DECIMAL
+  |   PARENTESIS_INI  PARENTESIS_FIN
+;
+
+e ::= EJECUTAR PARENTESIS_INI LITERAL PARENTESIS_FIN PUNTO_COMA e
+  |   /* LAMBDA */
+;
+

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Graficas</string>
+    <string name="buttonInput">Editar o crear gráficas</string>
+    <string name="buttonViewGraphics">Ver Gráficas</string>
+    <string name="buttonGoGraphics">Crear gráficas</string>
+    <string name="textViewEdit">Defina o edite sus gráficas:</string>
+</resources>
